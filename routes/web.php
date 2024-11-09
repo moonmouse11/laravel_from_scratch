@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use App\Models\Category;
@@ -16,26 +18,38 @@ use App\Models\User;
 |
 */
 
-Route::get('/', function () {
-    return view('posts', [
-        'posts' => Post::latest()->get()
-    ]);
+Route::get(uri: '/', action: static function () {
+    return view(
+        view: 'posts',
+        data: [
+            'posts' => Post::latest()->get()
+        ]
+    );
 });
 
-Route::get('/posts/{post:slug}', function (Post $post) {
-    return view('post', [
-        'post' => $post
-    ]);
+Route::get(uri: '/posts/{post:slug}', action: static function (Post $post) {
+    return view(
+        view: 'post',
+        data: [
+            'post' => $post
+        ]
+    );
 });
 
-Route::get('/categories/{category:slug}', function (Category $category) {
-    return view('category', [
-        'posts' => $category->posts
-    ]);
+Route::get(uri: '/categories/{category:slug}', action: static function (Category $category) {
+    return view(
+        view: 'category',
+        data: [
+            'posts' => $category->posts
+        ]
+    );
 });
 
-Route::get('/authors/{author:username}', function (User $author){
-    return view('posts', [
-        'posts' => $author->posts
-    ]);
+Route::get(uri: '/authors/{author:username}', action: static function (User $author) {
+    return view(
+        view: 'posts',
+        data: [
+            'posts' => $author->posts
+        ]
+    );
 });
