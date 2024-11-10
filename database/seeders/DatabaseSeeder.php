@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+final class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -19,13 +20,17 @@ class DatabaseSeeder extends Seeder
         Category::truncate();
         Post::truncate();
 
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Batman',
-            'username' => 'bat-man-never-die',
-        ]);
+        $user = User::factory()->create(
+            attributes: [
+                'name' => 'Batman',
+                'username' => 'bat-man-never-die',
+            ]
+        );
 
-        Post::factory(5)->create([
-            'user_id' => $user->id,
-        ]);
+        Post::factory(count: 5)->create(
+            attributes: [
+                'user_id' => $user->id,
+            ]
+        );
     }
 }

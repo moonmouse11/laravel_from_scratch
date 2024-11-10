@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -8,9 +10,9 @@ use App\Models\Post;
 use App\Models\Category;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
+ * @extends Factory<Post>
  */
-class PostFactory extends Factory
+final class PostFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,7 +25,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence,
-            'excerpt' => $this->faker->sentence,
+            'excerpt' => $this->faker->paragraphs(nb: 2, asText: true),
             'body' => $this->faker->paragraph,
             'slug' => $this->faker->slug,
             'user_id' => User::factory(),

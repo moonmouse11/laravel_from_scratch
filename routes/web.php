@@ -14,7 +14,7 @@ Route::get(uri: '/', action: static function () {
             'posts' => Post::latest()->get()
         ]
     );
-});
+})->name(name: 'home');
 
 Route::get(uri: '/posts/{post:slug}', action: static function (Post $post) {
     return view(
@@ -23,22 +23,25 @@ Route::get(uri: '/posts/{post:slug}', action: static function (Post $post) {
             'post' => $post
         ]
     );
-});
+})->name(name: 'posts');
 
 Route::get(uri: '/categories/{category:slug}', action: static function (Category $category) {
     return view(
         view: 'category',
         data: [
-            'posts' => $category->posts
+            'posts' => $category->posts,
+            'currentCategory' => $category,
+            'categories' => Category::all()
         ]
     );
-});
+})->name(name: 'category');
 
 Route::get(uri: '/authors/{author:username}', action: static function (User $author) {
     return view(
         view: 'posts',
         data: [
-            'posts' => $author->posts
+            'posts' => $author->posts,
+            'categories' => Category::all()
         ]
     );
-});
+})->name(name: 'author');
