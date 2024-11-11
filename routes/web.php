@@ -2,28 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\App\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
 
-Route::get(uri: '/', action: static function () {
-    return view(
-        view: 'posts',
-        data: [
-            'posts' => Post::latest()->get()
-        ]
-    );
-})->name(name: 'home');
+Route::get(uri: '/', action: [PostController::class, 'index'])->name(name: 'home');
 
-Route::get(uri: '/posts/{post:slug}', action: static function (Post $post) {
-    return view(
-        view: 'post',
-        data: [
-            'post' => $post
-        ]
-    );
-})->name(name: 'posts');
+Route::get(uri: '/posts/{post:slug}', action: [PostController::class, 'show'])->name(name: 'posts');
 
 Route::get(uri: '/categories/{category:slug}', action: static function (Category $category) {
     return view(
