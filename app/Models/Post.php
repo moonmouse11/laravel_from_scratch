@@ -20,6 +20,14 @@ final class Post extends Model
             $query->where('title', 'like', '%' . $search . '%')
                 ->orWhere('body', 'like', '%' . $search . '%')
         );
+
+        $query->when($filters['category'] ?? false, fn ($query, $category) =>
+            $query->whereHas(
+                relationship: 'category',
+                callback: fn (BelongsTo $query) => $query->where(column: 'slug', value: $category)
+
+            )
+        );
     }
 
     public function category(): BelongsTo

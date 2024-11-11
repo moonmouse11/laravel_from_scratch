@@ -13,9 +13,9 @@ final class PostController extends Controller
     public function index(): View
     {
         return view(
-            view: 'posts',
+            view: 'posts.index',
             data: [
-                'posts' => Post::latest()->filter(filters: request(['search', 'category', 'author']))->get()
+                'posts' => Post::latest()->filter(filters: request(key: ['search', 'category', 'author']))->get(),
             ]
         );
     }
@@ -23,7 +23,7 @@ final class PostController extends Controller
     public function show(Post $post): View
     {
         return view(
-            view: 'post',
+            view: 'posts.show',
             data: [
                 'post' => $post
             ]
